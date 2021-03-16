@@ -40,6 +40,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    // store: new MongoStore.create({ mongoUrl: 'mongodb://localhost/register' }),
   })
 );
 
