@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 
 var Item = require('../models/item');
-var Comment = require('../models/comment');
+var Cart = require('../models/cart');
 
 router.get('/', (req, res, next) => {
   console.log(req.session.userId, 'from items......');
@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
       console.log(user, '000000000000000000000000000000000000000');
       res.render('item', {
         items: items,
-        // session: session || {},
+        session: session || {},
         user: user || {},
       });
     });
@@ -93,21 +93,50 @@ router.get('/:id/dislike', (req, res, next) => {
   });
 });
 
-// router.post('/:id/comments', (req, res, next) => {
-//   var id = req.params.id;
-//   console.log(req.body);
-//   console.log('hello comment');
-//   req.body.articleId = id;
-//   Comment.create(req.body, (err, comment) => {
+// router.get('/:id/cart', (req, res, next) => {
+//   let id = req.params.id;
+//   let session = req.session.userId;
+//   Item.findById(id, (err, item) => {
 //     if (err) next(err);
-//     Article.findByIdAndUpdate(
-//       id,
-//       { $push: { commentId: comment._id } },
-//       (err, article) => {
-//         if (err) next(err);
-//         res.redirect('/articles/' + article.slug);
-//       }
-//     );
+
+//     User.findById(session, (err, user) => {
+//       if (err) next(err);
+//       Cart.findOneAndUpdate(
+//         { authorId: user._id },
+//         { $push: { itemId: item._id } },
+//         (err, cart) => {
+//           if (err) next(err);
+//           res.render('userCart', { cart: cart, user: user });
+//         }
+//       );
+//     });
 //   });
 // });
+
+router.get('/:id/cart', (req, res, next) => {
+  let id = req.params.id;
+  let session = req.session.userId;
+  Item.findById(id, (err, item) => {
+    if (err) next(err);
+
+    User.findById(session, (err, user) => {
+      if (err) next(err);
+      Cart.findOneAndUpdate(
+        { authorId: user._id },
+        { $push: { itemId: item._id } }
+      )
+        .populate('itemId')
+        .exec((err, cart) => {
+          console.log(cart.itemId[0]);
+          if (err) next(err);
+          res.render('userCart', {
+            carts: cart.itemId,
+            user: user,
+            cartId: cart._id,
+          });
+        });
+    });
+  });
+});
+
 module.exports = router;
