@@ -28,6 +28,15 @@
             <button class="btn btn-dislike">dislike</button>
           </a>
         </div>
+        <% } %> <%if(!session) { %>
+        <div class="like">
+          <a href="/users/login">
+            <button class="btn btn-like">like</button>
+          </a>
+          <a href="/users/login">
+            <button class="btn btn-dislike">dislike</button>
+          </a>
+        </div>
         <% } %>
       </h5>
 
@@ -37,6 +46,15 @@
           <button class="btn">edit</button>
         </a>
         <a href="/articles/<%= article.id%>/delete">
+          <button class="btn">Delete</button>
+        </a>
+      </div>
+      <% } %> <%if(!session) { %>
+      <div>
+        <a href="/users/login">
+          <button class="btn">edit</button>
+        </a>
+        <a href="/users/login">
           <button class="btn">Delete</button>
         </a>
       </div>
