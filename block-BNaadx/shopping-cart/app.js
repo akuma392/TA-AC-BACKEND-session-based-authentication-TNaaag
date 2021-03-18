@@ -15,6 +15,7 @@ var indexRouter = require('./routes/index');
 var itemRouter = require('./routes/items');
 var commentRouter = require('./routes/comments');
 var usersRouter = require('./routes/users');
+var cartRouter = require('./routes/users');
 
 mongoose.connect(
   'mongodb://localhost/shopping-cart',
@@ -50,6 +51,7 @@ app.use('/', indexRouter);
 app.use('/items', itemRouter);
 app.use('/comments', commentRouter);
 app.use('/users', usersRouter);
+app.use('/carts', cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

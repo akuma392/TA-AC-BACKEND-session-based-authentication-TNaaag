@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Cart = require('../models/cart');
 
 router.get('/', (req, res, next) => {
   res.render('home');
@@ -26,7 +27,11 @@ router.post('/signup', (req, res, next) => {
   User.create(req.body, (err, user) => {
     if (err) next(err);
 
-    res.redirect('/users/login');
+    Cart.create({ authorId: user.id }, (err, cart) => {
+      if (err) next(err);
+      console.log(cart, 'MyCarttttttttttttttttttttt');
+      res.redirect('/users/login');
+    });
   });
 });
 router.post('/login', (req, res, next) => {

@@ -36,20 +36,9 @@
         </a>
       </div>
       <% } %> <% } %> <%if(session) {%>
-      <a href=""> <button>Add to carts</button> </a>
+      <a href="/items/<%= item.id%>/cart"> <button>Add to carts</button> </a>
       <%}%> <%if(!session) {%>
       <a href="/users/login"> <button>Add to carts</button> </a>
-      <%}%> <%if(session) {%>
-      <!-- <form action="" method="POST" class="comment">
-        <textarea
-          name="content"
-          id=""
-          cols="15"
-          rows="5"
-          placeholder="add comment"
-        ></textarea>
-        <button>add</button> -->
-      </form>
       <%}%>
     </ul>
   </body>
