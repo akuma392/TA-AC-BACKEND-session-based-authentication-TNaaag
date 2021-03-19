@@ -6,6 +6,7 @@ router.get('/', (req, res, next) => {
   res.render('home');
 });
 
+// users
 router.get('/signup', (req, res, next) => {
   var error = req.flash('error');
   res.render('signup', { error });
