@@ -12,7 +12,7 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+// database
 mongoose.connect(
   'mongodb://localhost/user-login',
   { useNewUrlParser: true, useUnifiedTopology: true },
